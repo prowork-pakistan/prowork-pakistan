@@ -23,6 +23,7 @@ const path = {
     scss: "src/scss/**/*.scss",
     images: "src/images/**/*.+(png|jpg|gif|svg)",
     blur: "src/images/**/*.jpg",
+    videos: "src/images/**/*.mp4",
   },
   build: {
     dir: "dist/",
@@ -140,6 +141,15 @@ const others = () =>
       })
     );
 
+const videos = () =>
+  src(path.src.videos)
+    .pipe(dest(path.build.dir + "images/"))
+    .pipe(
+      bs.reload({
+        stream: true,
+      })
+    );
+
 // Watch task
 const watchTask = () => {
   watch([path.src.html, path.src.htminc], series(html));
@@ -155,13 +165,13 @@ exports.default = series(
   clean,
   html,
   parallel(scssDev, js),
-  parallel(images, vendor, fonts, others)
+  parallel(images, vendor, fonts, others, videos) // Added videos here
 );
 
 exports.dev = series(
   html,
   parallel(scss, js),
-  parallel(images, vendor, fonts, others),
+  parallel(images, vendor, fonts, others, videos), // Added videos here
   parallel(watchTask, function () {
     bs.init({
       server: {

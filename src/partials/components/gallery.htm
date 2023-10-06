@@ -12,35 +12,39 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="gallery-item">
-          <a href="../images/gallery/gallery01.jpg" data-source="../images/gallery/gallery01.jpg" title="Exibhition 01">
-            <img src="../images/gallery/gallery01.jpg" alt="gallery-images">
-          </a>
+    <div class="row" style="justify-content: center;">
+        <div id="image-set-1" class="row active">
+          <div class="col-md-6">
+            <div class="gallery-item">
+              <a href="../images/gallery/gallery01.jpg">
+                <img src="../images/gallery/gallery01.jpg" alt="gallery-images">
+              </a>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="gallery-item">
+              <a href="../images/gallery/gallery02.jpg">
+                <img src="../images/gallery/gallery02.jpg" alt="gallery-images">
+              </a>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="gallery-item">
+              <a href="../images/gallery/gallery03.jpg">
+                <img src="../images/gallery/gallery03.jpg" alt="gallery-images">
+              </a>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="gallery-item">
+              <a href="../images/gallery/gallery04.jpg">
+                <img src="../images/gallery/gallery04.jpg" alt="gallery-images">
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="gallery-item">
-          <a href="../images/gallery/gallery02.jpg" data-source="../images/gallery/gallery02.jpg" title="Exibhition 02">
-            <img src="../images/gallery/gallery02.jpg" alt="gallery-images">
-          </a>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="gallery-item">
-          <a href="../images/gallery/gallery03.jpg" data-source="../images/gallery/gallery03.jpg" title="Exibhition 03">
-            <img src="../images/gallery/gallery03.jpg" alt="gallery-images">
-          </a>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="gallery-item">
-          <a href="../images/gallery/gallery04.jpg" data-source="../images/gallery/gallery04.jpg" title="Exibhition 04">
-            <img src="../images/gallery/gallery04.jpg" alt="gallery-images">
-          </a>
-        </div>
-      </div>
+      <div id="circle-1" class="circle active"></div>
+      <div id="circle-2" class="circle"></div>
     </div>
   </div>
 </section>
@@ -49,4 +53,50 @@
   .border-custom {
     border-radius: 0px !important;
   }
+
+  .circle {
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    margin: 30px 10px 30px 10px;
+    cursor: pointer;
+  }
+
+  .circle:hover {
+    background-color: #F3A31E;
+  }
+
+  .circle.active {
+    background-color: #F3A31E;
+  }
+
 </style>
+
+<script>
+document.getElementById('circle-1').addEventListener('click', function () {
+    toggleGallery('1');
+    setImageSource('1');
+});
+
+document.getElementById('circle-2').addEventListener('click', function () {
+    toggleGallery('2');
+    setImageSource('2');
+});
+function toggleGallery(setNumber) {
+    document.querySelectorAll('.circle').forEach(function (el) {
+      el.classList.remove('active');
+    });
+    document.getElementById('circle-' + setNumber).classList.add('active');
+}
+function setImageSource(setNumber) {
+    let imageElements = document.querySelectorAll('.gallery-item a img');
+    
+    imageElements.forEach((image, index) => {
+        let newImageNumber = (setNumber - 1) * 4 + (index + 1);
+        let newImageSrc = '../images/gallery/gallery0' + newImageNumber + '.jpg';
+        image.setAttribute('src', newImageSrc);
+        image.parentElement.setAttribute('href', newImageSrc);
+    });
+}
+</script>
